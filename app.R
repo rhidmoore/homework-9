@@ -25,8 +25,9 @@ ui <- fluidPage(
                         "Carats",
                         min = min.carat,
                         max = max.carat,
-                        value = c(min.carat, max.carat))
-            ),
+                        value = c(min.carat, max.carat)),
+            submitButton(text = "GO") # stops other reactives from going until you press it. Dont need to label/call it
+        ),
         
         # Show a plot of diamonds data frame. This output doesn't care what that plot is, only that it will be associated with output$diamonds_plot
         mainPanel(
