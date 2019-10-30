@@ -10,6 +10,8 @@ library(tidyverse)
 min.carat <- min(diamonds$carat)
 max.carat <- max(diamonds$carat)
 
+axis_vars <- names(diamonds)
+
 # Define UI for application that draws a histogram
 ui <- fluidPage(
     
@@ -26,6 +28,18 @@ ui <- fluidPage(
                         min = min.carat,
                         max = max.carat,
                         value = c(min.carat, max.carat)),
+            
+            # Select x and y variables
+            selectInput(inputId = "xvar",
+                        label = "X axis",
+                        choices = axis_vars,
+                        selected = "x"),
+            
+            selectInput(inputId = "yvar",
+                        label = "Y axis",
+                        choices = axis_vars,
+                        selected = "y"),
+            
             submitButton(text = "GO") # stops other reactives from going until you press it. Dont need to label/call it
         ),
         
@@ -52,7 +66,7 @@ server <- function(input, output) {
     
     output$diamonds_plot <- renderPlot({
         
-        ggplot(d_filt(), aes_string(x = "carat", y="y", color = "clarity")) +
+        ggplot(d_filt(), aes_string(x = input$xvar, y = input$yvar, color = "clarity")) +
             geom_point()
         
     })   
